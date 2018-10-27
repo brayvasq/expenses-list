@@ -1,0 +1,21 @@
+{
+  "name": "expenses-node",
+  "version": "1.0.0",
+  "description": "A simple API in NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "API",
+    "REST",
+    "NodeJS"
+  ],
+  "author": "brayvasq <brayvasq@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.7"
+  }
+}

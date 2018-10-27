@@ -1,0 +1,126 @@
+{
+	"variables": [],
+	"info": {
+		"name": "API Expenses",
+		"_postman_id": "3a6e6cac-9c04-2351-9f08-f001f39d0052",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/expenses/test",
+			"request": {
+				"url": "localhost:3000/expenses/test",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/expenses",
+			"request": {
+				"url": "localhost:3000/expenses/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/expenses/create",
+			"request": {
+				"url": "localhost:3000/expenses/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"item\": \"Papitas\",\n\t\"price\": 2000\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/expenses/id",
+			"request": {
+				"url": "localhost:3000/expenses/5bd3b4834520d720943f1026",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Coca cola",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "15",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/expenses/id/update",
+			"request": {
+				"url": "localhost:3000/expenses/5bd3b4834520d720943f1026/update",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"item\": \"Coca Cola\",\n\t\"price\": 1355\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/expenses/id/delete",
+			"request": {
+				"url": "localhost:3000/expenses/5bd3b4834520d720943f1026/delete",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"item\": \"Coca Cola\",\n\t\"price\": 1355\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
