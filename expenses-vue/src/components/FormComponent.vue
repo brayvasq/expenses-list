@@ -24,6 +24,9 @@
             saveExpense() {
                 console.log(`Item : ${this.itemName}`);
                 console.log(`Price : ${this.itemPrice}`);
+                axios
+                    .get('http://localhost:3000/expenses/')
+                    .then(response => (console.log(response)))
             }
         }
     }
