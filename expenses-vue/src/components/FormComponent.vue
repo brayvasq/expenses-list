@@ -21,12 +21,18 @@
             }
         },
         methods: {
-            saveExpense() {
+            async saveExpense() {
                 console.log(`Item : ${this.itemName}`);
                 console.log(`Price : ${this.itemPrice}`);
-                axios
-                    .get('http://localhost:3000/expenses/')
-                    .then(response => (console.log(response)))
+                //axios
+                //    .get('http://localhost:3000/expenses/')
+                //    .then(response => (console.log(response)))
+                const data = {
+                    item: this.itemName,
+                    price: this.itemPrice
+                }
+                const resp = await axios.post('http://localhost:3000/expenses/create',data);
+                console.log(resp);
             }
         }
     }
