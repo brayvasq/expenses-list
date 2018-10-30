@@ -2,11 +2,13 @@
     <div>
         <div class="form-cont">
             <h1> Add a Expense </h1>
+            <img src="https://vuejsexamples.com/favicon.png" alt="">
             <div class="form-page">
                 <input type="text" placeholder="Input your item here" v-model="itemName"/>
                 <input type="number" placeholder="Input the price of item" v-model="itemPrice"/>
                 <input type="submit" @click="saveExpense">
             </div>
+
         </div>
     </div>
 </template>
@@ -51,7 +53,6 @@
     input[type="text"], input[type="number"] {
         display: block;
         margin-top: 2%;
-        //margin-left: 10%;
         padding-top: 5%;
         padding-bottom: 5%;
         padding-left: 2%;
@@ -93,4 +94,12 @@
         margin-bottom: -10%;
     }
 
+    img{
+        width: 64px;
+        height: 64px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2em;
+    }
 </style>
