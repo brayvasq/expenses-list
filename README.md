@@ -1,2 +1,2 @@
-# expenses-list
-Simple app for compare VueJS, ReactJS and Angular
+# Expenses Vue Preview
+![imgvue](https://github.com/brayvasq/expenses-list/blob/master/previews/expenses-vue.PNG)
