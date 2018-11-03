@@ -33,7 +33,7 @@
                     item: this.itemName,
                     price: this.itemPrice
                 }
-                const resp = await axios.post('http://localhost:3000/expenses/create',data);
+                const resp = await axios.post('http://localhost:5040/expenses/create',data);
                 console.log(resp);
             }
         }

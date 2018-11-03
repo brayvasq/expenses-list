@@ -3,8 +3,8 @@
         <div v-show="!edit">
             <div class="card">
                 <p class="info">{{name}} - ${{price}}</p>
-                <p class="button red" @click="deleteItem">Eliminar</p>
-                <p class="button green" @click="editToggle">Editar</p>
+                <p class="button red" @click="deleteItem">Delete</p>
+                <p class="button green" @click="editToggle">Edit</p>
             </div>
         </div>
         <div v-show="edit">
@@ -32,7 +32,7 @@
         props: ['id','name','price'],
         methods:{
             async deleteItem(){
-                const resp = await axios.delete(`http://localhost:3000/expenses/${this.id}/delete`);
+                const resp = await axios.delete(`http://localhost:5040/expenses/${this.id}/delete`);
             },
             editToggle(){
                 this.edit = !this.edit;
@@ -42,7 +42,7 @@
                     item: this.newname,
                     price: this.newprice
                 }
-                const resp = await axios.put(`http://localhost:3000/expenses/${this.id}/update`,data);
+                const resp = await axios.put(`http://localhost:5040/expenses/${this.id}/update`,data);
                 this.editToggle()
             }
         }

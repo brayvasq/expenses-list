@@ -31,7 +31,7 @@
         },
         methods:{
             async getExpenses(){
-                const expenses = await axios.get('http://localhost:3000/expenses/')
+                const expenses = await axios.get('http://localhost:5040/expenses/')
                 this.listExpenses = expenses.data;
                 //console.log(this.listExpenses)
             }
