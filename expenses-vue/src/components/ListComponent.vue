@@ -27,13 +27,11 @@
         },
         async mounted(){
             await setInterval(this.getExpenses,1000)
-            //await this.getExpenses()
         },
         methods:{
             async getExpenses(){
                 const expenses = await axios.get('http://localhost:5040/expenses/')
                 this.listExpenses = expenses.data;
-                //console.log(this.listExpenses)
             }
         }
     }

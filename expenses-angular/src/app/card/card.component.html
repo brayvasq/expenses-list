@@ -1,0 +1,14 @@
+<div *ngIf="!edit">
+  <div class="card">
+    <p class="info">{{newName}} - ${{newPrice}}</p>
+    <p class="button red" (click)="deleteItem()" >Delete</p>
+    <p class="button green" (click)="editToggle()">Edit</p>
+  </div>
+</div>
+<div *ngIf="edit">
+  <div class="card">
+    <p class="info">Name: <input type="text" [(ngModel)]="newName"> </p>
+    <p class="info">Price: <input type="text" [(ngModel)]="newPrice"> </p>
+    <p class="button green" (click)="editItem()">OK</p>
+  </div>
+</div>

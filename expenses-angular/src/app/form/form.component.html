@@ -1,0 +1,9 @@
+<div class="form-cont">
+  <h1> Add a Expense </h1>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/250px-Angular_full_color_logo.svg.png" alt="">
+  <div class="form-page">
+    <input [(ngModel)]="itemName" type="text" placeholder="Input your item here" />
+    <input [(ngModel)]="itemPrice" type="number" placeholder="Input the price of item"/>
+    <input type="submit" (click)="saveExpense()">
+  </div>
+</div>

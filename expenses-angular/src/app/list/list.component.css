@@ -1,0 +1,13 @@
+h1{
+  font-size: 48px;
+  color: #34495e;
+  margin-bottom: -10%;
+}
+.container-list{
+  display: grid;
+  height: -webkit-fill-available;
+}
+
+.list{
+  margin-top: 30%;
+}

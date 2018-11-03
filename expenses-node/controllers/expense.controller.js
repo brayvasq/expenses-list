@@ -1,6 +1,6 @@
 const Expense = require('../models/expense.model');
 exports.test = (req,res) => {
-    res.send('Test controller');
+    res.send({message:'Test controller'});
 };
 
 exports.index = (req,res) =>{
@@ -21,7 +21,7 @@ exports.create = (req,res) =>{
     expense.save((err)=>{
         if(err) return err;
         console.log(err);
-        res.send('Expense created!');
+        res.send({message:'Expense created!'});
     });
 };
 
@@ -35,13 +35,13 @@ exports.details = (req,res) => {
 exports.update = (req,res) => {
   Expense.findByIdAndUpdate(req.params.id,{$set: req.body},(err,expense)=>{
      if(err) return err;
-     res.send('Expense updated');
+     res.send({message:'Expense updated'});
   });
 };
 
 exports.delete = (req,res) => {
   Expense.findByIdAndRemove(req.params.id, (err) => {
      if(err) return err;
-     res.send('Expense deleted');
+     res.send({message:'Expense deleted'});
   });
 };
