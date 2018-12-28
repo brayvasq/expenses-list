@@ -20,8 +20,16 @@
 </template>
 
 <script>
+    /**
+     * Componente que contiene la información de un gasto específico
+     */
     export default{
         name:'ContentCard',
+        /**
+         * data()
+         *      Aquí se colocan las propiedades generales del componente
+         * @returns {{newname: string, newprice: string, edit: boolean}}
+         */
         data(){
             return{
                 newname: this.name,
@@ -29,20 +37,36 @@
                 edit: false
             }
         },
+        /**
+         * Aquí se definen las propiedades que van a ser explicítas
+         * en el HTML del componente
+         */
         props: ['id','name','price'],
         methods:{
+            /**
+             * Método que hace la petición al ws para eliminar un recurso
+             * @returns {Promise<void>}
+             */
             async deleteItem(){
-                const resp = await axios.delete(`http://localhost:5040/expenses/${this.id}/delete`);
+                await axios.delete(`http://localhost:5040/expenses/${this.id}/delete`);
             },
+            /**
+             * Método que funciona como un switch para cambiar el estado de la variable edit.
+             * La variable edit es usada para mostrar o no el formulario de edicion
+             */
             editToggle(){
                 this.edit = !this.edit;
             },
+            /**
+             * Método que hace la petición al ws para cambiar los datos de un recurso específico
+             * @returns {Promise<void>}
+             */
             async editItem(){
                 const data = {
                     item: this.newname,
                     price: this.newprice
                 }
-                const resp = await axios.put(`http://localhost:5040/expenses/${this.id}/update`,data);
+                await axios.put(`http://localhost:5040/expenses/${this.id}/update`,data);
                 this.editToggle()
             }
         }

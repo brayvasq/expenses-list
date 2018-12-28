@@ -6,7 +6,7 @@
             <div class="form-page">
                 <input type="text" placeholder="Input your item here" v-model="itemName"/>
                 <input type="number" placeholder="Input the price of item" v-model="itemPrice"/>
-                <input type="submit" @click="saveExpense">
+                <input type="submit" value="Send" @click="saveExpense">
             </div>
 
         </div>
@@ -14,8 +14,16 @@
 </template>
 
 <script>
+    /**
+     * Componente que funciona como el formulario de creación de gastos
+     */
     export default {
         name: 'FormComponent',
+        /**
+         * data()
+         *      Aquí se colocan las propiedades generales del componente
+         * @returns {{itemName: string, itemPrice: string}}
+         */
         data() {
             return {
                 itemName: '',
@@ -23,12 +31,13 @@
             }
         },
         methods: {
+            /**
+             * Método que hace la petición al ws para crear un recurso
+             * @returns {Promise<void>}
+             */
             async saveExpense() {
                 console.log(`Item : ${this.itemName}`);
                 console.log(`Price : ${this.itemPrice}`);
-                //axios
-                //    .get('http://localhost:3000/expenses/')
-                //    .then(response => (console.log(response)))
                 const data = {
                     item: this.itemName,
                     price: this.itemPrice

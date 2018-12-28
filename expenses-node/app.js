@@ -1,8 +1,8 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const express = require('express'); // Mini Framework para node
+const bodyParser = require('body-parser'); // Dependecia para parsear a json las respuestas
+const mongoose = require('mongoose'); // Dependencia para interactuar con mongo db
 
-const expense = require('./routes/expense.route');
+const expense = require('./routes/expense.route'); // Rutas de la aplicación
 const app = express();
 
 let port = 5040;
@@ -16,6 +16,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+/**
+ * Configuración de CORS para todas las rutas
+ */
 app.all("/*", (req, res, next) => {
     // CORS headers
     res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
@@ -31,8 +34,14 @@ app.all("/*", (req, res, next) => {
         next();
     }
 });
+// Indicando las rutas de la aplicación
 app.use('/expenses',expense);
 
+/**
+ * Método que ejecuta la aplicación
+ *
+ * @param port puento en el que va a ejecutarse la aplicación
+ */
 app.listen(port, ()=>{
     console.log(`http://localhost:${port}`)
 })

@@ -1,10 +1,5 @@
 <template>
     <div id="app">
-        <!--<img alt="Vue logo" src="./assets/logo.png">-->
-        <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
-        <!--<FormComponent class="component component-one"></FormComponent>-->
-        <!--<ListComponent class="component component-two"></ListComponent>-->
-
         <div class="container container-one">
             <FormComponent class="component component-one"></FormComponent>
         </div>
@@ -18,6 +13,11 @@
     //import HelloWorld from './components/HelloWorld.vue'
     import FormComponent from './components/FormComponent.vue';
     import ListComponent from './components/ListComponent.vue';
+
+    /**
+     * Componente principal. en la sección components van todos
+     * los componentes personalizados a incluir
+     */
     export default {
         name: 'app',
         components: {

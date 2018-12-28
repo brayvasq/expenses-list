@@ -15,20 +15,40 @@
 
 <script>
     import ContentCard from './ContentCard.vue';
+
+    /**
+     * Componente que listará los gastos
+     */
     export default {
         name: 'ListComponent',
+        /**
+         * components:
+         *      Aquí van los componentes que se importaron y que se van a usar el el componente actual
+         * */
         components:{
             ContentCard
         },
+        /**
+         * data()
+         *      Aquí se colocan las propiedades generales del componente
+         * */
         data(){
             return {
                 listExpenses: null
             }
         },
+        /**
+         * mounted()
+         *      Este es el método que se ejecuta cuando el componente ha sido montado
+         * */
         async mounted(){
             await setInterval(this.getExpenses,1000)
         },
         methods:{
+            /**
+             * Método que consume el webservice para traer la lista de gastos
+             * @returns {Promise<void>}
+             */
             async getExpenses(){
                 const expenses = await axios.get('http://localhost:5040/expenses/')
                 this.listExpenses = expenses.data;

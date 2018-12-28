@@ -2,7 +2,15 @@ import React, {Component} from 'react';
 import './ContentCard.css';
 import axios from 'axios';
 
+/**
+ * Componente que contiene la información de un gasto específico
+ */
 class ContentCard extends Component {
+    /**
+     * Constructor donde se definen las propiedades del componente.
+     * Aquí se puede definir la lista de estados y enlazar los métodos al componente.
+     * @param props propiedades explícitas del componente
+     */
     constructor(props) {
         super(props);
         this.state = {
@@ -17,16 +25,28 @@ class ContentCard extends Component {
         this.handleChangePrice = this.handleChangePrice.bind(this);
     }
 
+    /**
+     * Método que hace la petición al ws para eliminar un recurso
+     * @returns {Promise<void>}
+     */
     async deleteItem() {
         console.log(this.props.id)
         const resp = await axios.delete(`http://localhost:5040/expenses/${this.props.id}/delete`);
         console.log(resp);
     }
 
+    /**
+     * Método que funciona como un switch para cambiar el estado de la variable edit.
+     * La variable edit es usada para mostrar o no el formulario de edicion
+     */
     editToggle() {
         this.setState({edit: !this.state.edit});
     }
 
+    /**
+     * Método que hace la petición al ws para cambiar los datos de un recurso específico
+     * @returns {Promise<void>}
+     */
     async editItem() {
         this.editToggle()
 
@@ -37,18 +57,26 @@ class ContentCard extends Component {
         const resp = await axios.put(`http://localhost:5040/expenses/${this.props.id}/update`, data);
         console.log(resp);
     }
-
+    /**
+     * Método que actualiza el estado del estado newName cuando cambia un input
+     * @param event evento ejecutado
+     */
     handleChangeName(event) {
         this.setState({newName: event.target.value});
         console.log(this.state.newName)
     }
-
+    /**
+     * Método que actualiza el estado del estado newPrice cuando cambia un input
+     * @param event evento ejecutado
+     */
     handleChangePrice(event){
         this.setState({newPrice: event.target.value});
     }
-
+    /**
+     * Método que renderiza el componente, aquí va el template del mismo.
+     * @returns {*} template del componente
+     */
     render() {
-
         return(
             !this.state.edit? <div className="card">
                 <p className="info">{this.state.newName} - ${this.state.newPrice}</p>
