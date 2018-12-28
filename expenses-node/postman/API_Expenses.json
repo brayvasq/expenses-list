@@ -10,7 +10,7 @@
 		{
 			"name": "localhost:3000/expenses/test",
 			"request": {
-				"url": "localhost:3000/expenses/test",
+				"url": "localhost:5040/expenses/test",
 				"method": "GET",
 				"header": [],
 				"body": {},
@@ -21,7 +21,7 @@
 		{
 			"name": "localhost:3000/expenses",
 			"request": {
-				"url": "localhost:3000/expenses/",
+				"url": "localhost:5040/expenses/",
 				"method": "GET",
 				"header": [],
 				"body": {},
@@ -32,7 +32,7 @@
 		{
 			"name": "localhost:3000/expenses/create",
 			"request": {
-				"url": "localhost:3000/expenses/create",
+				"url": "localhost:5040/expenses/create",
 				"method": "POST",
 				"header": [
 					{
@@ -43,7 +43,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"item\": \"Papitas\",\n\t\"price\": 2000\n}"
+					"raw": "{\n\t\"item\": \"Pizza\",\n\t\"price\": 5000\n}"
 				},
 				"description": ""
 			},
@@ -52,7 +52,7 @@
 		{
 			"name": "localhost:3000/expenses/id",
 			"request": {
-				"url": "localhost:3000/expenses/5bd3b4834520d720943f1026",
+				"url": "localhost:5040/expenses/5bd67324a7024e14e410adb3",
 				"method": "GET",
 				"header": [
 					{
@@ -85,7 +85,7 @@
 		{
 			"name": "localhost:3000/expenses/id/update",
 			"request": {
-				"url": "localhost:3000/expenses/5bd3b4834520d720943f1026/update",
+				"url": "localhost:5040/expenses/5bde1e6b4897781d88d5ea72/update",
 				"method": "PUT",
 				"header": [
 					{
@@ -105,7 +105,7 @@
 		{
 			"name": "localhost:3000/expenses/id/delete",
 			"request": {
-				"url": "localhost:3000/expenses/5bd3b4834520d720943f1026/delete",
+				"url": "localhost:5040/expenses/5bd3b4a34520d720943f1027/delete",
 				"method": "DELETE",
 				"header": [
 					{
