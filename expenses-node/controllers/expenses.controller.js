@@ -21,4 +21,12 @@ const create = (request, response) => {
   });
 }
 
-module.exports = { index, create }
+const show = (request, response) => {
+  Expense.findById(request.params.id, (error, expense) => {
+    if (error) return error;
+
+    response.send(expense);
+  });
+}
+
+module.exports = { index, create, show }

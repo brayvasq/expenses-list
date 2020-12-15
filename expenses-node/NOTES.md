@@ -185,7 +185,7 @@ module.exports = { Expense }
 ### Get all the expenses
 Create the controller action
 ```javascript
-// touch controllers/expense.controller.js
+// controllers/expense.controller.js
 const { Expense } = require('../models/expense.model')
 
 const index = (request, response) => {
@@ -235,6 +235,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 ### Creating an expense
 Create the controller action
 ```javascript
+// controllers/expense.controller.js
 // ....
 const create = (request, response) => {
   let expense = new Expense({
@@ -257,4 +258,27 @@ Add the route
 // routes/expense.route.js
 // ...
 router.post('/', expensesController.create);
+```
+
+### Get a single expense
+Create the controller action
+```javascript
+// controllers/expense.controller.js
+// ....
+const show = (request, response) => {
+  Expense.findById(request.params.id, (error, expense) => {
+    if (error) return error;
+
+    response.send(expense);
+  });
+}
+
+module.exports = { index, create, show }
+```
+
+Add the route
+```javascript
+// routes/expense.route.js
+// ...
+router.get('/:id', expensesController.show);
 ```
