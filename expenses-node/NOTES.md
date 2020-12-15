@@ -17,7 +17,11 @@ npm init
 
 Install dependencies
 ```bash
+# Project dependencies
 npm install express body-parser mongoose dotenv --save
+
+# Linter
+npm i eslint -D
 ```
 
 ## Basic server
@@ -124,6 +128,7 @@ const dbUrl = process.env.MONGODB_URI
 
 // Connection
 mongoose.connect(dbUrl, { useNewUrlParser: true })
+// Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = global.Promise
 
 const db = mongoose.connection
@@ -131,3 +136,86 @@ const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 ```
 
+## Building the API
+Create a controller file.
+```bash
+touch controllers/expense.controller.js
+```
+
+Create a route file
+```bash
+touch routes/expense.route.js
+```
+
+Import router module
+```javascript
+// routes/expense.route.js
+const express = require('express')
+const router = express.Router()
+```
+
+### Creating the Model
+Create a model file
+```bash
+touch models/expense.model.js
+```
+
+Create the schema.
+```javascript
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+const ExpenseSchema = new Schema({
+    item: {
+        type: String,
+        required: true,
+        max: 100
+    },
+    price: {
+        type: Number, 
+        required: true
+    }
+})
+
+const Expense = mongoose.model('Expense', ExpenseSchema);
+
+module.exports = { Expense }
+```
+
+### Get all the expenses
+Create the controller action
+```javascript
+// touch controllers/expense.controller.js
+const { Expense } = require('../models/expense.model')
+
+const index = (request, response) => {
+  Expense.find({}, (error, expenses) => {
+    if(error) return error;
+
+    response.send(expenses);
+  });
+}
+
+module.exports = { index }
+```
+
+Add the route
+```javascript
+// routes/expense.route.js
+// ...
+const expenseController = require('../controllers/expense.controller')
+
+router.get('/', expenseController.index);
+
+module.exports = router
+```
+
+Setup the routes into the main file
+```javascript
+// ....
+const expenses = require('./routes/expense.route')
+
+// ....
+// Routes
+app.use('/expenses', expenses)
+```
