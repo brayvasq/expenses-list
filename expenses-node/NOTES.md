@@ -139,12 +139,12 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 ## Building the API
 Create a controller file.
 ```bash
-touch controllers/expense.controller.js
+touch controllers/expenses.controller.js
 ```
 
 Create a route file
 ```bash
-touch routes/expense.route.js
+touch routes/expenses.route.js
 ```
 
 Import router module
@@ -203,9 +203,9 @@ Add the route
 ```javascript
 // routes/expense.route.js
 // ...
-const expenseController = require('../controllers/expense.controller')
+const expensesController = require('../controllers/expenses.controller')
 
-router.get('/', expenseController.index);
+router.get('/', expensesController.index);
 
 module.exports = router
 ```
@@ -213,9 +213,48 @@ module.exports = router
 Setup the routes into the main file
 ```javascript
 // ....
-const expenses = require('./routes/expense.route')
+const expenses = require('./routes/expenses.route')
 
 // ....
 // Routes
 app.use('/expenses', expenses)
+```
+
+### Configure bodyParser
+To parse the body of POST actions we need to configura bodyParser.
+```javascript
+// index.js
+// ...
+const bodyParser = require('body-parser');
+
+// ...
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+```
+
+### Creating an expense
+Create the controller action
+```javascript
+// ....
+const create = (request, response) => {
+  let expense = new Expense({
+    item: request.body.item,
+    price: request.body.price
+  });
+
+  expense.save(error => {
+    if (error) return error;
+
+    response.send({ message: 'Expense created!' })
+  });
+}
+
+module.exports = { index, create }
+```
+
+Add the route
+```javascript
+// routes/expense.route.js
+// ...
+router.post('/', expensesController.create);
 ```
