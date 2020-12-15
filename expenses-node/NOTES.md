@@ -1,4 +1,6 @@
 # API
+NodeJS express project to expose an expenses simple API.
+
 ## Setup project
 Creating project.
 ```bash
@@ -97,4 +99,35 @@ app.use('/', test)
 ```
 
 Now you can visit http://localhost:5000/test
+
+## Connect to the MongoDB
+Use the m manager to use a DB. https://github.com/aheckmann/m
+```bash
+# Install a MongoDB version
+m stable
+
+# Create a directory for data
+mkdir ~/MongoData
+
+# Run the mongodb service
+m use <version> --port 27017 --dbpath ~/MongoData
+```
+
+Import the modules and stablish a connection
+```javascript
+// index.js
+// ...
+const mongoose = require('mongoose')
+
+// ...
+const dbUrl = process.env.MONGODB_URI
+
+// Connection
+mongoose.connect(dbUrl, { useNewUrlParser: true })
+mongoose.Promise = global.Promise
+
+const db = mongoose.connection
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+```
 
