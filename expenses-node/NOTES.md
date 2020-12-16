@@ -335,3 +335,47 @@ Add the route
 // ...
 router.delete('/:id', expensesController.remove);
 ```
+
+## Add CORS to the Api
+To allow other apps to make request to our API, we have to setup CORS.
+
+Create a middleware file.
+```bash
+touch middlewares/cors.middleware.js
+```
+
+Create a method to execute after each request.
+```javascript
+// middlewares/cors.middleware.js
+const cors = (request, response, next) => {
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header(
+        "Access-Control-Allow-Methods", 
+        "GET,PUT,POST,DELETE,OPTIONS"
+    );
+
+    response.header(
+        "Access-Control-Allow-Headers",
+        "Content-type,Accept,X-Access-Token,X-Key"
+    );
+
+    if(request.method == "OPTIONS") {
+        response.status(200).end();
+    } else {
+        next();
+    }
+}
+
+module.exports = { cors }
+```
+
+Import and use the middleware
+```javascript
+// index.js
+// ....
+const { cors } = require('./middlewares/cors.middleware')
+
+// ....
+// CORS
+app.use(cors)
+```

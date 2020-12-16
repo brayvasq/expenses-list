@@ -4,6 +4,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 
+const { cors } = require('./middlewares/cors.middleware')
+
 const test = require('./routes/test.route')
 const expenses = require('./routes/expenses.route')
 const app = express()
@@ -23,6 +25,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 // bodyParser config
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+
+// CORS
+app.use(cors)
 
 // Routes
 app.use('/', test)
