@@ -29,4 +29,16 @@ const show = (request, response) => {
   });
 }
 
-module.exports = { index, create, show }
+const update = (request, response) => {
+  Expense.findByIdAndUpdate(
+    request.params.id,
+    { $set: request.body },
+    (error, expense) => {
+      if(error) return error;
+
+      response.send({ message: 'Expense updated' });
+    }
+  );
+}
+
+module.exports = { index, create, show, update }

@@ -282,3 +282,30 @@ Add the route
 // ...
 router.get('/:id', expensesController.show);
 ```
+
+### Update an expense
+Create the controller action
+```javascript
+// controllers/expense.controller.js
+// ....
+const update = (request, response) => {
+  Expense.findByIdAndUpdate(
+    request.params.id,
+    { $set: request.body },
+    (error, expense) => {
+      if(error) return error;
+
+      response.send({ message: 'Expense updated' });
+    }
+  );
+}
+
+module.exports = { index, create, show, update }
+```
+
+Add the route
+```javascript
+// routes/expense.route.js
+// ...
+router.put('/:id', expensesController.update);
+```
