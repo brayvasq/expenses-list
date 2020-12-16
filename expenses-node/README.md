@@ -1,78 +1,42 @@
-## Expenses NodeJS
+# Expenses API
+NodeJS express project to expose an expenses simple API.
+**NOTE:** If you want to know how I built the API, check the file `NOTES.md`
 
-Creando la carpeta de la aplicación.
-
+## Run
+Install dependencies
 ```bash
-mkdir expenses-app && cd expenses-app
+npm install
 ```
 
-Inicializar el proyecto.
-
+Setup the environment variables in the `.env` file. i.e:
 ```bash
-npm init
+PORT=5040
+MONGODB_URI='mongodb://localhost:27017/expenses'
 ```
 
-Creando el archivo del servidor.
-
+Execute the node project
 ```bash
-touch serve.js
+node index.js
 ```
 
-Instalando dependencias.
-
+## Project structure
 ```bash
-npm install --save express body-parser mongoose
+.
+├── controllers
+│   ├── expenses.controller.js
+│   └── test.controller.js
+├── index.js
+├── middlewares
+│   └── cors.middleware.js
+├── models
+│   └── expense.model.js
+├── NOTES.md
+├── package.json
+├── package-lock.json
+├── postman
+│   └── expenses.json
+├── README.md
+└── routes
+    ├── expenses.route.js
+    └── test.route.js
 ```
-
-### Controladores
-
-Creando el directorio.
-
-```bash
-mkdir controllers
-```
-
-Creando el archivo controlador.
-
-```bash
-touch controllers/expense.controller.js
-```
-
-### Modelos
-
-Creando el directorio.
-
-```bash
-mkdir models
-```
-
-Creando el archivo de modelo.
-
-```bash
-touch controllers/expense.model.js
-```
-
-### Rutas
-
-Creando el archivo de rutas.
-
-```bash
-mkdir expense.route.js
-```
-
-### Estructura 
-
-```
-│   app.js
-│   package-lock.json
-│   package.json
-├───controllers
-│       expense.controller.js
-├───models
-│       expense.model.js
-├───postman
-│       API Expenses.postman_collection.json
-└───routes
-        expense.route.js
-```
-

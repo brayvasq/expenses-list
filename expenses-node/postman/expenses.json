@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "3a6e6cac-9c04-2351-9f08-f001f39d0052",
+		"name": "API Expenses",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:5040/test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5040/test",
+					"host": [
+						"localhost"
+					],
+					"port": "5040",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5040/expenses",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5040/expenses/",
+					"host": [
+						"localhost"
+					],
+					"port": "5040",
+					"path": [
+						"expenses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5040/expenses",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"item\": \"Pizza\",\n\t\"price\": 5000\n}"
+				},
+				"url": {
+					"raw": "localhost:5040/expenses/",
+					"host": [
+						"localhost"
+					],
+					"port": "5040",
+					"path": [
+						"expenses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5040/expenses/:id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"url": {
+					"raw": "localhost:5040/expenses/5fd940290ff8cb41b6f18113",
+					"host": [
+						"localhost"
+					],
+					"port": "5040",
+					"path": [
+						"expenses",
+						"5fd940290ff8cb41b6f18113"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5040/expenses/:id",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"item\": \"Coca Cola\",\n\t\"price\": 1355\n}"
+				},
+				"url": {
+					"raw": "localhost:5040/expenses/5fd940290ff8cb41b6f18113",
+					"host": [
+						"localhost"
+					],
+					"port": "5040",
+					"path": [
+						"expenses",
+						"5fd940290ff8cb41b6f18113"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5040/expenses/:id",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"item\": \"Coca Cola\",\n\t\"price\": 1355\n}"
+				},
+				"url": {
+					"raw": "localhost:5040/expenses/5fd940290ff8cb41b6f18113",
+					"host": [
+						"localhost"
+					],
+					"port": "5040",
+					"path": [
+						"expenses",
+						"5fd940290ff8cb41b6f18113"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
