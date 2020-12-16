@@ -309,3 +309,29 @@ Add the route
 // ...
 router.put('/:id', expensesController.update);
 ```
+
+### Delete an expense
+Create the controller action
+```javascript
+// controllers/expense.controller.js
+// ....
+const remove = (request, response) => {
+  Expense.findByIdAndRemove(
+    request.params.id,
+    (error) => {
+      if(error) return error;
+
+      response.send({ message: 'Expense deleted' });
+    }
+  );
+}
+
+module.exports = { index, create, show, update, remove }
+```
+
+Add the route
+```javascript
+// routes/expense.route.js
+// ...
+router.delete('/:id', expensesController.remove);
+```

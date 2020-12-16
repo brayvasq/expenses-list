@@ -41,4 +41,15 @@ const update = (request, response) => {
   );
 }
 
-module.exports = { index, create, show, update }
+const remove = (request, response) => {
+  Expense.findByIdAndRemove(
+    request.params.id,
+    (error) => {
+      if(error) return error;
+
+      response.send({ message: 'Expense deleted' });
+    }
+  );
+}
+
+module.exports = { index, create, show, update, remove }
