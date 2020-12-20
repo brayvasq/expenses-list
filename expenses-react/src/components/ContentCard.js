@@ -31,7 +31,7 @@ class ContentCard extends Component {
      */
     async deleteItem() {
         console.log(this.props.id)
-        const resp = await axios.delete(`http://localhost:5040/expenses/${this.props.id}/delete`);
+        const resp = await axios.delete(`http://localhost:5040/expenses/${this.props.id}`);
         console.log(resp);
     }
 
@@ -54,7 +54,7 @@ class ContentCard extends Component {
             item: this.state.newName,
             price: this.state.newPrice
         };
-        const resp = await axios.put(`http://localhost:5040/expenses/${this.props.id}/update`, data);
+        const resp = await axios.put(`http://localhost:5040/expenses/${this.props.id}`, data);
         console.log(resp);
     }
     /**
