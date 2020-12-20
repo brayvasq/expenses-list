@@ -47,7 +47,7 @@ class FormComponent extends Component{
             price: this.state.itemPrice
         };
 
-        const resp = await axios.post('http://localhost:5040/expenses/create',data);
+        const resp = await axios.post('http://localhost:5040/expenses',data);
         console.log(resp);
     }
     /**
