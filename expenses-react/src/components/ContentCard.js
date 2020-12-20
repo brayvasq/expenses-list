@@ -1,96 +1,44 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
 import './ContentCard.css';
 import axios from 'axios';
 
-/**
- * Componente que contiene la información de un gasto específico
- */
-class ContentCard extends Component {
-    /**
-     * Constructor donde se definen las propiedades del componente.
-     * Aquí se puede definir la lista de estados y enlazar los métodos al componente.
-     * @param props propiedades explícitas del componente
-     */
-    constructor(props) {
-        super(props);
-        this.state = {
-            newName: this.props.name,
-            newPrice: this.props.price,
-            edit: false
-        };
-        this.editItem = this.editItem.bind(this);
-        this.deleteItem = this.deleteItem.bind(this);
-        this.editToggle = this.editToggle.bind(this);
-        this.handleChangeName = this.handleChangeName.bind(this);
-        this.handleChangePrice = this.handleChangePrice.bind(this);
-    }
+const ContentCard = props => {
+    const [name, setName] = useState(props.name);
+    const [price, setPrice] = useState(props.price);
+    const [edit, setEdit] = useState(false);
 
-    /**
-     * Método que hace la petición al ws para eliminar un recurso
-     * @returns {Promise<void>}
-     */
-    async deleteItem() {
-        console.log(this.props.id)
-        const resp = await axios.delete(`http://localhost:5040/expenses/${this.props.id}`);
-        console.log(resp);
-    }
+    const deleteItem = async () => {
+        await axios.delete(`http://localhost:5040/expenses/${props.id}`);
+    };
 
-    /**
-     * Método que funciona como un switch para cambiar el estado de la variable edit.
-     * La variable edit es usada para mostrar o no el formulario de edicion
-     */
-    editToggle() {
-        this.setState({edit: !this.state.edit});
-    }
+    const editToggle = () => setEdit(!edit);
 
-    /**
-     * Método que hace la petición al ws para cambiar los datos de un recurso específico
-     * @returns {Promise<void>}
-     */
-    async editItem() {
-        this.editToggle()
-
+    const editItem = async () => {
         const data = {
-            item: this.state.newName,
-            price: this.state.newPrice
-        };
-        const resp = await axios.put(`http://localhost:5040/expenses/${this.props.id}`, data);
-        console.log(resp);
+            item: name,
+            price
+        }
+
+        await axios.put(`http://localhost:5040/expenses/${props.id}`, data);
+
+        editToggle();
     }
-    /**
-     * Método que actualiza el estado del estado newName cuando cambia un input
-     * @param event evento ejecutado
-     */
-    handleChangeName(event) {
-        this.setState({newName: event.target.value});
-        console.log(this.state.newName)
-    }
-    /**
-     * Método que actualiza el estado del estado newPrice cuando cambia un input
-     * @param event evento ejecutado
-     */
-    handleChangePrice(event){
-        this.setState({newPrice: event.target.value});
-    }
-    /**
-     * Método que renderiza el componente, aquí va el template del mismo.
-     * @returns {*} template del componente
-     */
-    render() {
-        return(
-            !this.state.edit? <div className="card">
-                <p className="info">{this.state.newName} - ${this.state.newPrice}</p>
-                <p className="button red" onClick={this.deleteItem}>Delete</p>
-                <p className="button green" onClick={this.editToggle}>Edit</p>
-            </div> : <div className="card">
-                <p className="info">Name: <input type="text" value={this.state.newName} onChange={this.handleChangeName}/></p>
-                <p className="info">Price: <input type="text" value={this.state.newPrice} onChange={this.handleChangePrice}/></p>
-                <p className="button green" onClick={this.editItem}>OK</p>
+
+    const handleChangeName = event => setName(event.target.value);
+
+    const handleChangePrice = event => setPrice(event.target.value);
+
+    return (
+        !edit ? <div className="card">
+            <p className="info">{name} - ${price}</p>
+            <p className="button red" onClick={deleteItem}>Delete</p>
+            <p className="button green" onClick={editToggle}>Edit</p>
+        </div> : <div className="card">
+                <p className="info">Name: <input type="text" value={name} onChange={handleChangeName} /></p>
+                <p className="info">Price: <input type="text" value={price} onChange={handleChangePrice} /></p>
+                <p className="button green" onClick={editItem}>OK</p>
             </div>
-        )
-
-    }
-}
-
+    );
+};
 
 export default ContentCard;
