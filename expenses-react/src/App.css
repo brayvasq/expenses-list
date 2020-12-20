@@ -2,47 +2,31 @@
   text-align: center;
 }
 
-.Container{
-  float:left;
-  width: 50%;
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
 }
 
-.Container-one{
-  position: fixed;
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
 }
-.Container-two{
-  position: relative;
-  margin-left: 50%;
-}
-.Component{
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
-.Component-one{
-  background: linear-gradient(#3498db,#2c3e50,#2c3e50);
+.App-link {
+  color: #61dafb;
 }
-
-body::-webkit-scrollbar {
-  background-color:transparent;
-  width:10px
-}
-
-/* background of the scrollbar except button or resizer */
-body::-webkit-scrollbar-track {
-  background-color:transparent;
-}
-
-/* scrollbar itself */
-body::-webkit-scrollbar-thumb {
-  background-color:#babac0;
-  border-radius:16px;
-}
-
-/* set button(top and bottom of the scrollbar) */
-body::-webkit-scrollbar-button {display:none}
-
 
 @keyframes App-logo-spin {
   from {
