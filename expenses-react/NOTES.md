@@ -280,6 +280,142 @@ function App() {
 // ...
 ```
 
+## Item component
+Add action types
+```javascript
+// src/js/constants/action-types.js
+// ...
+export const EDIT_EXPENSE = "EDIT_EXPENSE";
+export const REMOVE_EXPENSE = "REMOVE_EXPENSE";
+```
+
+Add actions
+```javascript
+// src/js/actions/index.js
+import { ADD_EXPENSE, EDIT_EXPENSE, REMOVE_EXPENSE } from "../constants/action-types";
+
+// ....
+export const editExpense = payload => {
+  return {
+    type: EDIT_EXPENSE,
+    payload
+  };
+};
+
+export const removeExpense = payload => {
+  return {
+    type: REMOVE_EXPENSE,
+    payload
+  };
+};
+```
+
+Add action reducers
+```javascript
+// src/js/reducers/index.js
+import { ADD_EXPENSE, EDIT_EXPENSE, REMOVE_EXPENSE } from "../constants/action-types";
+
+// ....
+const rootReducer = (state = initialState, action) => {
+  if (action.type === ADD_EXPENSE) {
+    // ....
+  } else if (action.type === REMOVE_EXPENSE) {
+    let expenses = state.expenses
+      .slice()
+      .filter(el => el.id !== action.payload.id);
+
+    return Object.assign({}, state, {
+      expenses: expenses
+    });
+  } else if (action.type === EDIT_EXPENSE){
+    let expenses = state.expenses
+    .slice()
+    .map(el => el.id === action.payload.id ? {...el, ...action.payload} : el);
+
+    return Object.assign({}, state, {
+      expenses: expenses
+    });
+  }
+
+  return state;
+}
+```
+
+Add `Item` component
+```javascript
+// src/js/components/Item.jsx
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { editExpense, removeExpense } from "../actions/index";
+
+const mapDispatchToProps = dispatch => {
+    return {
+        editExpense: expense => dispatch(editExpense(expense)),
+        removeExpense: expense => dispatch(removeExpense(expense))
+    }
+};
+
+const ConnectedItem = props => {
+    const [item, setItem] = useState(props.post.item);
+    const [price, setPrice] = useState(props.post.price);
+    const [edit, setEdit] = useState(false);
+
+    const editToggle = () => {
+        setEdit(!edit);
+    };
+
+    const handleDelete = () => {
+        props.removeExpense({ id: props.post.id })
+    };
+
+    const handleEdit = () => {
+        props.editExpense({ id: props.post.id, item, price });
+        editToggle();
+    };
+
+    const handleItemChange = event => {
+        setItem(event.target.value);
+    };
+
+    const handlePriceChange = event => {
+        setPrice(event.target.value);
+    };
+
+    return (
+        !edit ?
+            <div>
+                <p>{props.post.item} - {props.post.price}</p>
+                <button onClick={editToggle}>Edit</button>
+                <button onClick={handleDelete}>Delete</button>
+            </div>
+            : <div>
+                <p>Name: <input type="text" value={item} onChange={handleItemChange}/></p>
+                <p>Price: <input type="number" value={price} onChange={handlePriceChange}/></p>
+                <button onClick={editToggle}>Back</button>
+                <button onClick={handleEdit}>Save</button>
+            </div>
+    );
+};
+
+const Item = connect(null, mapDispatchToProps)(ConnectedItem);
+
+export default Item;
+```
+
+Use `Item` component into the `List` component
+```javascript
+// src/js/components/List.jsx
+import Item from "./Item";
+
+// ....
+const ConnectedList = ({ expenses }) => (
+    <ul>
+        {expenses.map(el => (
+            <Item key={el.id} post={el}/>
+        ))}
+    </ul>
+);
+```
 
 ## References
 - https://www.valentinog.com/blog/redux/

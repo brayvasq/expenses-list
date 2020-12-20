@@ -1,7 +1,7 @@
 // src/js/components/List.jsx
-
 import React from "react";
 import { connect } from "react-redux";
+import Item from "./Item";
 
 const mapStateToProps = state => {
   return { expenses: state.expenses }
@@ -10,7 +10,7 @@ const mapStateToProps = state => {
 const ConnectedList = ({ expenses }) => (
     <ul>
         {expenses.map(el => (
-            <li key={el.id}>{el.item} - {el.price}</li>
+            <Item key={el.id} post={el}/>
         ))}
     </ul>
 );
