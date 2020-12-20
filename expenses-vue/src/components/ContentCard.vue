@@ -48,7 +48,7 @@
              * @returns {Promise<void>}
              */
             async deleteItem(){
-                await axios.delete(`http://localhost:5040/expenses/${this.id}/delete`);
+                await axios.delete(`http://localhost:5040/expenses/${this.id}`);
             },
             /**
              * Método que funciona como un switch para cambiar el estado de la variable edit.
@@ -66,7 +66,7 @@
                     item: this.newname,
                     price: this.newprice
                 }
-                await axios.put(`http://localhost:5040/expenses/${this.id}/update`,data);
+                await axios.put(`http://localhost:5040/expenses/${this.id}`,data);
                 this.editToggle()
             }
         }
