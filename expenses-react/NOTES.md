@@ -100,6 +100,91 @@ const rootReducer = (state = initialState, action) => {
 }
 ```
 
+## React-redux
+```javascript
+// src/index.js
+import React from 'react';
+import { render } from "react-dom";
+import { Provider } from "react-redux";
+import store from "./js/store/index"
+import App from './App';
+
+render(
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
+  document.getElementById('root')
+);
+```
+
+## List component
+Modify the App component
+
+```javascript
+// src/App.js
+import logo from './logo.svg';
+import List from "./js/components/List"
+
+function App() {
+  return (
+    <div className="App">
+      <h2>Expenses</h2>
+      <List/>
+    </div>
+  );
+}
+
+export default App;
+```
+
+List component
+```javascript
+// src/js/components/List.jsx
+
+import React from "react";
+import { connect } from "react-redux";
+
+const mapStateToProps = state => {
+  return { expenses: state.expenses }
+};
+
+const ConnectedList = ({ expenses }) => (
+    <ul>
+        {expenses.map(el => (
+            <li key={el.id}>{el.item} - {el.price}</li>
+        ))}
+    </ul>
+);
+
+const List = connect(mapStateToProps)(ConnectedList);
+
+export default List;
+
+```
+
+Add some temp data to our initial state
+```javascript
+// src/js/reducers/index.js
+
+// ...
+const initialState = {
+  expenses: [
+    {
+      id: 1,
+      item: "coca-cola",
+      price: 3000
+    },
+    {
+      id: 2,
+      item: "pizza",
+      price: 4000
+    }
+  ]
+};
+```
+
 ## References
 - https://www.valentinog.com/blog/redux/
 - https://react-redux.js.org/introduction/quick-start
