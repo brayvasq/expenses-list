@@ -20,25 +20,25 @@ npm i react-redux --save-dev
 ### Structure project
 ```bash
 # Stores directory
-mkdir -p src/js/store
+mkdir -p src/store
 
 # Reducers directory
-mkdir -p src/js/reducers
+mkdir -p src/reducers
 
 # Actions directory
-mkdir -p src/js/actions
+mkdir -p src/actions
 
 # Constants directory
-mkdir -p src/js/constants
+mkdir -p src/constants
 
 # Components directory
-mkdir -p src/js/components
+mkdir -p src/components
 ```
 ## Redux
 ### Store for expenses
 
 ```javascript
-// src/js/store/index.js
+// src/store/index.js
 import { createStore } from "redux";
 import rootReducer from "../reducers/index"
 
@@ -49,7 +49,7 @@ export default store;
 
 ### Reducer for expenses
 ```javascript
-// src/js/reducers/index.js
+// src/reducers/index.js
 const initialState = {
     expenses: []
 };
@@ -64,13 +64,13 @@ export default rootReducer;
 ### Actions for expenses
 Create the respective constant
 ```javascript
-// src/js/constants/action-types.js
+// src/constants/action-types.js
 export const ADD_EXPENSE = "ADD_EXPENSE";
 ```
 
 Create the action
 ```javascript
-// src/js/actions/index.js
+// src/actions/index.js
 import { ADD_EXPENSE } from "../constants/action-types";
 
 export const addExpense = (payload) => {
@@ -84,7 +84,7 @@ export const addExpense = (payload) => {
 ### Add expenses
 Add the reducer for `ADD_ARTICLE` action
 ```javascript
-// src/js/reducers/index.js
+// src/reducers/index.js
 import { ADD_EXPENSE } from "../constants/action-types";
 
 // ....
@@ -106,7 +106,7 @@ const rootReducer = (state = initialState, action) => {
 import React from 'react';
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import store from "./js/store/index"
+import store from "./store/index"
 import App from './App';
 
 render(
@@ -125,7 +125,7 @@ Modify the App component
 ```javascript
 // src/App.js
 import logo from './logo.svg';
-import List from "./js/components/List"
+import List from "./components/List"
 
 function App() {
   return (
@@ -141,7 +141,7 @@ export default App;
 
 List component
 ```javascript
-// src/js/components/List.jsx
+// src/components/List.jsx
 
 import React from "react";
 import { connect } from "react-redux";
@@ -166,7 +166,7 @@ export default List;
 
 Add some temp data to our initial state
 ```javascript
-// src/js/reducers/index.js
+// src/reducers/index.js
 
 // ...
 const initialState = {
@@ -187,7 +187,7 @@ const initialState = {
 
 ## Form component
 ```javascript
-// src/js/components/Form.jsx
+// src/components/Form.jsx
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { addExpense } from "../actions/index";
@@ -261,18 +261,18 @@ export default Form;
 ```javascript
 // src/App.js
 // ....
-import Form from "./js/components/Form";
+import Form from "./components/Form";
 
 function App() {
   return (
     <>
-      <div className="App">
-        <h2>Expenses</h2>
-        <List />
-      </div>
       <div>
         <h2>Add a new article</h2>
         <Form />
+      </div>
+      <div className="App">
+        <h2>Expenses</h2>
+        <List />
       </div>
     </>
   );
@@ -283,7 +283,7 @@ function App() {
 ## Item component
 Add action types
 ```javascript
-// src/js/constants/action-types.js
+// src/constants/action-types.js
 // ...
 export const EDIT_EXPENSE = "EDIT_EXPENSE";
 export const REMOVE_EXPENSE = "REMOVE_EXPENSE";
@@ -291,7 +291,7 @@ export const REMOVE_EXPENSE = "REMOVE_EXPENSE";
 
 Add actions
 ```javascript
-// src/js/actions/index.js
+// src/actions/index.js
 import { ADD_EXPENSE, EDIT_EXPENSE, REMOVE_EXPENSE } from "../constants/action-types";
 
 // ....
@@ -312,7 +312,7 @@ export const removeExpense = payload => {
 
 Add action reducers
 ```javascript
-// src/js/reducers/index.js
+// src/reducers/index.js
 import { ADD_EXPENSE, EDIT_EXPENSE, REMOVE_EXPENSE } from "../constants/action-types";
 
 // ....
@@ -343,7 +343,7 @@ const rootReducer = (state = initialState, action) => {
 
 Add `Item` component
 ```javascript
-// src/js/components/Item.jsx
+// src/components/Item.jsx
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { editExpense, removeExpense } from "../actions/index";
@@ -404,7 +404,7 @@ export default Item;
 
 Use `Item` component into the `List` component
 ```javascript
-// src/js/components/List.jsx
+// src/components/List.jsx
 import Item from "./Item";
 
 // ....
