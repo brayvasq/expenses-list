@@ -1,18 +1,18 @@
 // src/js/components/Item.jsx
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { editExpense, removeExpense } from "../actions/index";
+import { fetchUpdateExpense, fetchDeleteExpense } from "../actions/index";
 
 const mapDispatchToProps = dispatch => {
     return {
-        editExpense: expense => dispatch(editExpense(expense)),
-        removeExpense: expense => dispatch(removeExpense(expense))
+        fetchUpdateExpense: (id, expense) => dispatch(fetchUpdateExpense(id, expense)),
+        fetchDeleteExpense: id => dispatch(fetchDeleteExpense(id))
     }
 };
 
 const ConnectedItem = props => {
-    const [item, setItem] = useState(props.post.item);
-    const [price, setPrice] = useState(props.post.price);
+    const [item, setItem] = useState(props.expense.item);
+    const [price, setPrice] = useState(props.expense.price);
     const [edit, setEdit] = useState(false);
 
     const editToggle = () => {
@@ -20,11 +20,11 @@ const ConnectedItem = props => {
     };
 
     const handleDelete = () => {
-        props.removeExpense({ id: props.post.id })
+        props.fetchDeleteExpense(props.expense._id)
     };
 
     const handleEdit = () => {
-        props.editExpense({ id: props.post.id, item, price });
+        props.fetchUpdateExpense(props.expense._id, { item, price });
         editToggle();
     };
 
@@ -39,13 +39,13 @@ const ConnectedItem = props => {
     return (
         !edit ?
             <div>
-                <p>{props.post.item} - {props.post.price}</p>
+                <p>{props.expense._id} - {props.expense.item} - {props.expense.price}</p>
                 <button onClick={editToggle}>Edit</button>
                 <button onClick={handleDelete}>Delete</button>
             </div>
             : <div>
-                <p>Name: <input type="text" value={item} onChange={handleItemChange}/></p>
-                <p>Price: <input type="number" value={price} onChange={handlePriceChange}/></p>
+                <p>Name: <input type="text" value={item} onChange={handleItemChange} /></p>
+                <p>Price: <input type="number" value={price} onChange={handlePriceChange} /></p>
                 <button onClick={editToggle}>Back</button>
                 <button onClick={handleEdit}>Save</button>
             </div>

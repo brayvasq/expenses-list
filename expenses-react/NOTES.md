@@ -356,8 +356,8 @@ const mapDispatchToProps = dispatch => {
 };
 
 const ConnectedItem = props => {
-    const [item, setItem] = useState(props.post.item);
-    const [price, setPrice] = useState(props.post.price);
+    const [item, setItem] = useState(props.expense.item);
+    const [price, setPrice] = useState(props.expense.price);
     const [edit, setEdit] = useState(false);
 
     const editToggle = () => {
@@ -365,11 +365,11 @@ const ConnectedItem = props => {
     };
 
     const handleDelete = () => {
-        props.removeExpense({ id: props.post.id })
+        props.removeExpense({ id: props.expense.id })
     };
 
     const handleEdit = () => {
-        props.editExpense({ id: props.post.id, item, price });
+        props.editExpense({ id: props.expense.id, item, price });
         editToggle();
     };
 
@@ -384,7 +384,7 @@ const ConnectedItem = props => {
     return (
         !edit ?
             <div>
-                <p>{props.post.item} - {props.post.price}</p>
+                <p>{props.expense.item} - {props.expense.price}</p>
                 <button onClick={editToggle}>Edit</button>
                 <button onClick={handleDelete}>Delete</button>
             </div>
@@ -411,10 +411,309 @@ import Item from "./Item";
 const ConnectedList = ({ expenses }) => (
     <ul>
         {expenses.map(el => (
-            <Item key={el.id} post={el}/>
+            <Item key={el.id} expense={el}/>
         ))}
     </ul>
 );
+```
+
+## API lib
+```bash
+# Libs directory
+mkdir -p src/lib
+```
+
+Add the api crud client
+```javascript
+// src/lib/expenses.js
+const BASE_URL = "http://localhost:5040"
+
+export const apiGetExpenses = () => {
+    const url = BASE_URL + "/expenses";
+
+    return fetch(url)
+        .then(response => response.json());
+};
+
+export const apiAddExpense = (expense) => {
+    const url = BASE_URL + "/expenses";
+
+    const request = {
+        method: 'POST',
+        body: JSON.stringify(expense),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    };
+
+    return fetch(url, request)
+        .then(response => response.json());
+};
+
+export const apiUpdateExpense = (id, expense) => {
+    const url = BASE_URL + "/expenses/" + id;
+
+    const request = {
+        method: 'PUT',
+        body: JSON.stringify(expense),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    };
+
+    return fetch(url, request)
+        .then(response => response.json());
+};
+
+export const apiDeleteExpense = (id) => {
+    const url = BASE_URL + "/expenses/" + id;
+
+    const request = { method: 'DELETE' };
+
+    return fetch(url, request)
+        .then(response => response.json());
+};
+```
+
+Add redux-thunk
+```bash
+npm i redux-thunk
+```
+
+Add thunk middleware
+```javascript
+// src/store/index.js
+import { applyMiddleware, createStore } from "redux";
+import rootReducer from "../reducers/index"
+
+import thunk from 'redux-thunk';
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+export default store;
+```
+
+Add `GET_EXPENSES` constant.
+```javascript
+// src/constants/action-types.js
+// ....
+export const GET_EXPENSES = "GET_EXPENSES";
+```
+
+Add async actions.
+```javascript
+// src/actions/index.js
+import { ADD_EXPENSE, EDIT_EXPENSE, REMOVE_EXPENSE, GET_EXPENSES } from "../constants/action-types";
+import { apiGetExpenses, apiAddExpense, apiUpdateExpense, apiDeleteExpense } from '../lib/expenses';
+
+const getExpenses = payload => ({ type: GET_EXPENSES, payload });
+
+const addExpense = payload => {
+  // .....
+};
+
+const editExpense = payload => {
+ //  .....
+};
+
+const removeExpense = payload => {
+ // ......
+};
+
+// Async actions
+export const fetchGetExpenses = () => {
+  return dispatch => {
+    return apiGetExpenses()
+      .then(response => {
+        dispatch(getExpenses(response));
+      })
+  }
+}
+
+export const fetchAddExpense = expense => {
+  return dispatch => {
+    apiAddExpense(expense)
+      .then(response => dispatch(addExpense({ item: expense.item, price: expense.price })))
+      .catch(response => console.log(response))
+  }
+}
+
+export const fetchUpdateExpense = (id, expense) => {
+  return dispatch => {
+    apiUpdateExpense(id, expense)
+      .then(response => dispatch(editExpense({ id: id, item: expense.item, price: expense.price })))
+      .catch(response => console.log(response))
+  }
+}
+
+export const fetchDeleteExpense = id => {
+  return dispatch => {
+    apiDeleteExpense(id)
+      .then(response => dispatch(removeExpense({id: id})))
+      .catch(response => console.log(response))
+  }
+}
+```
+
+Add get expenses reducer
+```javascript
+// src/reducers/index.js
+import { ADD_EXPENSE, EDIT_EXPENSE, GET_EXPENSES, REMOVE_EXPENSE } from "../constants/action-types";
+
+const initialState = {
+  expenses: []
+};
+
+const rootReducer = (state = initialState, action) => {
+  if (action.type === GET_EXPENSES) {
+    return { ...state, expenses: action.payload }
+  } else if (action.type === ADD_EXPENSE) {
+    // .....
+  } else if (action.type === REMOVE_EXPENSE) {
+    let expenses = state.expenses
+      .slice()
+      .filter(el => el._id !== action.payload.id);
+    // ....
+  } else if (action.type === EDIT_EXPENSE) {
+    let expenses = state.expenses
+      .slice()
+      .map(el => el._id === action.payload.id ? { ...el, ...action.payload } : el);
+    // .....
+  }
+
+  return state;
+}
+
+// .....
+```
+
+Add get expenses dispatch function into `List` component
+```javascript
+// src/js/components/List.jsx
+import React, { useEffect } from "react";
+// ....
+import { fetchGetExpenses } from "../actions/index";
+
+// ....
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchGetExpenses: () => dispatch(fetchGetExpenses())
+    }
+}
+
+const ConnectedList = props => {
+
+    useEffect(() => props.fetchGetExpenses());
+
+    return (
+        <ul>
+            {props.expenses.map(el => (
+                <Item key={el._id} expense={el} />
+            ))}
+        </ul>
+    );
+}
+
+const List = connect(mapStateToProps, mapDispatchToProps)(ConnectedList);
+
+// ....
+```
+
+Change dispatch function into `Item` component.
+```javascript
+// src/js/components/Item.jsx
+// ....
+import { fetchUpdateExpense, fetchDeleteExpense } from "../actions/index";
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchUpdateExpense: (id, expense) => dispatch(fetchUpdateExpense(id, expense)),
+        fetchDeleteExpense: id => dispatch(fetchDeleteExpense(id))
+    }
+};
+
+const ConnectedItem = props => {
+    // ....
+
+    const handleDelete = () => {
+        props.fetchDeleteExpense(props.expense._id)
+    };
+
+    const handleEdit = () => {
+        props.fetchUpdateExpense(props.expense._id, { item, price });
+        editToggle();
+    };
+
+    // ....
+
+    return (
+        !edit ?
+            <div>
+                <p>{props.expense._id} - {props.expense.item} - {props.expense.price}</p>
+                <button onClick={editToggle}>Edit</button>
+                <button onClick={handleDelete}>Delete</button>
+            </div>
+            : <div>
+              {/* Edit From code */}
+            </div>
+    );
+};
+// ....
+```
+
+Change dispatch function into `Form` component.
+```javascript
+// src/js/components/Form.jsx
+// ....
+import { fetchAddExpense } from "../actions/index";
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchAddExpense: expense => dispatch(fetchAddExpense(expense)),
+    };
+};
+
+const ConnectedForm = props => {
+    const [item, setItem] = useState("");
+    const [price, setPrice] = useState(0);
+
+    const handleItemChange = event => {
+        setItem(event.target.value);
+    };
+
+    // ....
+
+    const handleSubmit = event => {
+        event.preventDefault();
+        props.fetchAddExpense({ item, price });
+
+        setItem("");
+        setPrice(0);
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <div>
+                <label htmlFor="title">Add Expense</label>
+                <input
+                    type="text"
+                    id="item"
+                    value={item}
+                    onChange={handleItemChange}
+                />
+                <input
+                    type="number"
+                    id="price"
+                    value={price}
+                    onChange={handlePriceChange}
+                />
+                <button type="submit">Add Expense</button>
+            </div>
+        </form>
+    );
+};
+
+// ....
 ```
 
 ## References
