@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Expense} from './expense';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {Observable, throwError} from "rxjs";
-import {catchError, map} from "rxjs/operators";
+import { Expense } from './expense';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 
 /**
  * Constante de encabezado para todas las peticiones
@@ -20,7 +20,7 @@ const httpOptions = {
 export class ExpensesService {
 
   private url = "http://localhost:5040/expenses";
-  edit:boolean = false;
+  edit: boolean = false;
 
   /**
    * Constructor del componente
@@ -31,7 +31,7 @@ export class ExpensesService {
   /**
    * Método que consume el webservice para traer la lista de gastos
    */
-  getExpenses(): Observable<any>{
+  getExpenses(): Observable<any> {
     return this.http.get(this.url, httpOptions);
   }
 
@@ -40,7 +40,7 @@ export class ExpensesService {
    * @param data datos del recurso que se creará
    */
   saveExpense(data): Observable<any> {
-    return this.http.post(this.url + '/create', data, httpOptions)
+    return this.http.post(this.url, data, httpOptions)
   }
 
   /**
@@ -48,15 +48,15 @@ export class ExpensesService {
    * @param data nuevos datos del recurso
    * @param id identificador del recurso
    */
-  editItem(data,id): Observable<any>{
-    return this.http.put(this.url+"/"+id+"/update", data, httpOptions)
+  editItem(data, id): Observable<any> {
+    return this.http.put(this.url + "/" + id, data, httpOptions)
   }
 
   /**
    * Método que hace la petición al ws para eliminar un recurso
    * @param id identificador del recurso
    */
-  deleteItem(id): Observable<any>{
-    return this.http.delete(this.url+"/"+id+"/delete", httpOptions)
+  deleteItem(id): Observable<any> {
+    return this.http.delete(this.url + "/" + id, httpOptions)
   }
 }
