@@ -1,5 +1,6 @@
 // src/js/components/Item.jsx
 import React, { useState } from "react";
+import './Item.css';
 import { connect } from "react-redux";
 import { fetchUpdateExpense, fetchDeleteExpense } from "../actions/index";
 
@@ -38,16 +39,30 @@ const ConnectedItem = props => {
 
     return (
         !edit ?
-            <div>
+            <div className="Item">
                 <p>{props.expense._id} - {props.expense.item} - {props.expense.price}</p>
-                <button onClick={editToggle}>Edit</button>
-                <button onClick={handleDelete}>Delete</button>
+                <button className="Button Warning" onClick={editToggle}>Edit</button>
+                <button className="Button Red" onClick={handleDelete}>Delete</button>
             </div>
-            : <div>
-                <p>Name: <input type="text" value={item} onChange={handleItemChange} /></p>
-                <p>Price: <input type="number" value={price} onChange={handlePriceChange} /></p>
-                <button onClick={editToggle}>Back</button>
-                <button onClick={handleEdit}>Save</button>
+            : <div className="Item">
+                <div>
+                    <input
+                        type="text"
+                        id="item"
+                        placeholder="Item name here"
+                        value={item}
+                        onChange={handleItemChange}
+                    />
+                    <input
+                        type="number"
+                        id="price"
+                        placeholder="Item price here"
+                        value={price}
+                        onChange={handlePriceChange}
+                    />
+                </div>
+                <button className="Button" onClick={editToggle}>Back</button>
+                <button className="Button Green" onClick={handleEdit}>Save</button>
             </div>
     );
 };

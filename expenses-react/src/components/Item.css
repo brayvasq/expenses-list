@@ -1,0 +1,43 @@
+.Item {
+  background: #fffffe;
+  font-size: 16px;
+  -webkit-box-shadow: 0px 5px 4px #c0c0c09d;
+  -moz-box-shadow: 0px 5px 4px #c0c0c09d;
+  box-shadow: 0px 5px 4px #c0c0c09d;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 10px;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+p {
+  color: #094067;
+  font-weight: 700;
+}
+
+.Button {
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 30px;
+  margin: 0 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.Green {
+  background: #2cb67d;
+}
+
+.Warning {
+  background: #ffd803;
+}
+
+.Red {
+  color: #fffffe;
+  background: #ef4565;
+}

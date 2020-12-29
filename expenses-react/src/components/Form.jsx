@@ -1,5 +1,6 @@
 // src/js/components/Form.jsx
 import React, { useState } from "react";
+import './Form.css'
 import { connect } from "react-redux";
 import { fetchAddExpense } from "../actions/index";
 
@@ -31,20 +32,31 @@ const ConnectedForm = props => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="title">Add Expense</label>
+            <div className="Input">
+                <label htmlFor="item">
+                    Name
+                </label>
                 <input
                     type="text"
+                    name="item"
                     id="item"
+                    placeholder="Item name here"
                     value={item}
                     onChange={handleItemChange}
-                />
+                />    
+            </div>
+            <div className="Input">
+                <label htmlFor="price">Price</label>
                 <input
                     type="number"
+                    name="price"
                     id="price"
+                    placeholder="Item price here"
                     value={price}
                     onChange={handlePriceChange}
                 />
+            </div>
+            <div>
                 <button type="submit">Add Expense</button>
             </div>
         </form>
