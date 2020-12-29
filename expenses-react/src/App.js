@@ -1,24 +1,20 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import FormComponent from './components/FormComponent';
-import ListComponent from './components/ListComponent';
+import List from "./components/List";
+import Form from "./components/Form";
 
-const App = () => {
+function App() {
   return (
-    <div className="">
-      <div className="Container Container-one">
-        <div className="Component Component-one">
-          <FormComponent />
-        </div>
+    <div className="Container">
+      <div className="Form-Container">
+        <h2>Add a new expense</h2>
+        <Form />
       </div>
-      <div className="Container Container-two">
-        <div className="Component">
-          <ListComponent />
-        </div>
+      <div className="List-Container">
+        <h2>Expenses</h2>
+        <List />
       </div>
     </div>
   );
-};
+}
 
 export default App;

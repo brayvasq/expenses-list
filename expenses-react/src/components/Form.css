@@ -1,0 +1,36 @@
+input[type="text"],
+input[type="number"] {
+    font-size: 18px;
+    outline: none;
+    padding: 2% 5%;
+    margin: 1%;
+    border: 3px solid;
+    border-radius: 5px;
+    border-color: #094067;
+}
+
+button[type="submit"] {
+    font-size: 18px;
+    padding: 2% 8%;
+    outline: none;
+    margin-top: 1%;
+    border: 3px solid;
+    border-radius: 5px;
+    border-color: #094067;
+    cursor: pointer;
+    background: #3da9fc;
+}
+
+button[type="submit"]:hover {
+    background: #90b4ce;
+}
+
+.Input label {
+    color: #094067;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.Input label, .Input button {
+    display: block;
+}
